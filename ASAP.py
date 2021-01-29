@@ -40,14 +40,14 @@ def product_checker():
                 else:
                     availability = availabilityMatch
                 if availability == product.availability:
-                        print(cur_time, Fore.WHITE + "::", product.storeColor + product.store, Style.RESET_ALL,
+                        print(i, cur_time, Fore.WHITE + "::", product.storeColor + product.store, Style.RESET_ALL,
                             Fore.CYAN + product.name, Fore.WHITE + "::", Fore.RED + "Sold-Out")
                         print(Fore.WHITE + "-------------------------------------------------------------")
                         print(Style.RESET_ALL)
                         sleep(5)
                         i += 1
                 elif availability != product.availability:
-                        print(cur_time, Fore.WHITE + "::", product.storeColor + product.store, Style.RESET_ALL,
+                        print(i, cur_time, Fore.WHITE + "::", product.storeColor + product.store, Style.RESET_ALL,
                             Fore.CYAN + product.name, Fore.WHITE + "::", Fore.GREEN + "Available")
                         print(Fore.WHITE + "-------------------------------------------------------------")
                         print(Style.RESET_ALL)
