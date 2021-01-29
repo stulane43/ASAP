@@ -15,7 +15,7 @@ def send_mailBB():
 
     server.sendmail(
         config.username,
-        config.username,
+        config.to_address,
         msg
     )
     

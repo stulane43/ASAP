@@ -1,0 +1,4 @@
+colorama==0.4.4
+requests==2.25.1
+pync==2.0.3
+beautifulsoup4==4.9.3

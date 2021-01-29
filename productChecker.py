@@ -3,7 +3,6 @@ import re
 import config
 from bs4 import BeautifulSoup
 from colorama import init, Fore, Style
-from pync import Notifier
 from time import localtime, strftime, sleep
 from send_email import send_mailBB, send_mailGS
 
@@ -43,7 +42,7 @@ def product_checker():
                         Fore.CYAN + product.name, Fore.WHITE + "::", Fore.RED + "Sold-Out")
                     print(Fore.WHITE + "-------------------------------------------------------------")
                     print(Style.RESET_ALL)
-                    sleep(15)
+                    sleep(5)
             elif availability != product.availability:
                     print(cur_time, Fore.WHITE + "::", product.storeColor + product.store, Style.RESET_ALL,
                         Fore.CYAN + product.name, Fore.WHITE + "::", Fore.GREEN + "Available")
@@ -54,7 +53,6 @@ def product_checker():
                     elif product.store == config.GS_prod["store"]:
                         send_mailGS()
                     print(Fore.GREEN + "Sent!")
-                    Notifier.notify(product.name + ' is now available')
                     sleep(60)
 
 product_checker()
