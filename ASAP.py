@@ -44,7 +44,7 @@ def product_checker():
                             Fore.CYAN + product.name, Fore.WHITE + "::", Fore.RED + "Sold-Out")
                         print(Fore.WHITE + "-------------------------------------------------------------")
                         print(Style.RESET_ALL)
-                        sleep(1)
+                        sleep(5)
                         i += 1
                 elif availability != product.availability:
                         print(cur_time, Fore.WHITE + "::", product.storeColor + product.store, Style.RESET_ALL,
