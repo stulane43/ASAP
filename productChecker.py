@@ -25,34 +25,41 @@ p2 = lookupProduct(config.GS_prod["name"], config.GS_prod["store"], config.GS_pr
 products = (p1, p2)
         
 def product_checker():
+    i = 0
     while True:
         for product in products:
-            cur_time = strftime("%H:%M:%S", localtime())
-            page = requests.get(product.url, headers=config.headers)
-            soup = BeautifulSoup(page.text, 'html.parser')
-            result = str(soup.find(product.findClass, {product.classType:product.typeContent}))
-            buttonState = re.compile(product.regex)
-            availabilityMatch = buttonState.search(result).group()
-            if product.availability == 0:
-                availability = int(availabilityMatch)
+            if i < 720:
+                cur_time = strftime("%H:%M:%S", localtime())
+                page = requests.get(product.url, headers=config.headers)
+                soup = BeautifulSoup(page.text, 'html.parser')
+                result = str(soup.find(product.findClass, {product.classType:product.typeContent}))
+                buttonState = re.compile(product.regex)
+                availabilityMatch = buttonState.search(result).group()
+                if product.availability == 0:
+                    availability = int(availabilityMatch)
+                else:
+                    availability = availabilityMatch
+                if availability == product.availability:
+                        print(cur_time, Fore.WHITE + "::", product.storeColor + product.store, Style.RESET_ALL,
+                            Fore.CYAN + product.name, Fore.WHITE + "::", Fore.RED + "Sold-Out")
+                        print(Fore.WHITE + "-------------------------------------------------------------")
+                        print(Style.RESET_ALL)
+                        sleep(1)
+                        i += 1
+                elif availability != product.availability:
+                        print(cur_time, Fore.WHITE + "::", product.storeColor + product.store, Style.RESET_ALL,
+                            Fore.CYAN + product.name, Fore.WHITE + "::", Fore.GREEN + "Available")
+                        print(Fore.WHITE + "-------------------------------------------------------------")
+                        print(Style.RESET_ALL)
+                        if product.store == config.BB_prod["store"]:
+                            send_mailBB()
+                        elif product.store == config.GS_prod["store"]:
+                            send_mailGS()
+                        print(Fore.GREEN + "Sent!")
+                        sleep(5)
             else:
-                availability = availabilityMatch
-            if availability == product.availability:
-                    print(cur_time, Fore.WHITE + "::", product.storeColor + product.store, Style.RESET_ALL,
-                        Fore.CYAN + product.name, Fore.WHITE + "::", Fore.RED + "Sold-Out")
-                    print(Fore.WHITE + "-------------------------------------------------------------")
-                    print(Style.RESET_ALL)
-                    sleep(5)
-            elif availability != product.availability:
-                    print(cur_time, Fore.WHITE + "::", product.storeColor + product.store, Style.RESET_ALL,
-                        Fore.CYAN + product.name, Fore.WHITE + "::", Fore.GREEN + "Available")
-                    print(Fore.WHITE + "-------------------------------------------------------------")
-                    print(Style.RESET_ALL)
-                    if product.store == config.BB_prod["store"]:
-                        send_mailBB()
-                    elif product.store == config.GS_prod["store"]:
-                        send_mailGS()
-                    print(Fore.GREEN + "Sent!")
-                    sleep(60)
+                send_mailBB()
+                print(Fore.WHITE + "Product Update")
+                i = 0
 
 product_checker()
