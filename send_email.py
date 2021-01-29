@@ -26,6 +26,17 @@ def send_mailGS():
 
     server.sendmail(
         config.username,
+        config.to_address,
+        msg
+    )
+
+def send_mailUpdate():    
+    subject =  "ASAP Update"
+    body = "Your Item is still Out of Stock"
+    msg = f"subject: {subject}\n\n{body}"
+
+    server.sendmail(
         config.username,
+        config.to_address,
         msg
     )

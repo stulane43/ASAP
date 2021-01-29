@@ -4,7 +4,7 @@ import config
 from bs4 import BeautifulSoup
 from colorama import init, Fore, Style
 from time import localtime, strftime, sleep
-from send_email import send_mailBB, send_mailGS
+from send_email import send_mailBB, send_mailGS, send_mailUpdate
 
 init()
 
@@ -58,8 +58,8 @@ def product_checker():
                         print(Fore.GREEN + "Sent!")
                         sleep(5)
             else:
-                send_mailBB()
-                print(Fore.WHITE + "Product Update")
+                send_mailUpdate()
+                print(Fore.WHITE + "Product Status Update \n")
                 i = 0
 
 product_checker()
