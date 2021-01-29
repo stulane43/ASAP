@@ -2,6 +2,7 @@
 username = ''
 pwd = ''
 to_address = ''
+update_address = ''
 mailServer = 'smtp.gmail.com'
 
 # user agent header

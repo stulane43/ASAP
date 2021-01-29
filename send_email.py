@@ -37,6 +37,6 @@ def send_mailUpdate():
 
     server.sendmail(
         config.username,
-        config.to_address,
+        config.update_address,
         msg
     )
