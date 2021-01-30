@@ -28,7 +28,7 @@ def product_checker():
     i = 0
     while True:
         for product in products:
-            if i < 720:
+            if i < 100:
                 cur_time = strftime("%H:%M:%S", localtime())
                 page = requests.get(product.url, headers=config.headers)
                 soup = BeautifulSoup(page.text, 'html.parser')

@@ -1,10 +1,12 @@
-import smtplib
+import smtplib, ssl
 import config
 
 # Mail Server
-server = smtplib.SMTP(config.mailServer, 587)
+port = 587
+server = smtplib.SMTP(config.mailServer, port)
+context = ssl.create_default_context()
 server.ehlo()
-server.starttls()
+server.starttls(context=context)
 server.ehlo
 server.login(config.username, config.pwd)
 
