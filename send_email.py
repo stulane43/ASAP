@@ -1,7 +1,6 @@
 import smtplib, ssl
 import config
 
-# Mail Server
 port = 587
 server = smtplib.SMTP(config.mailServer, port)
 context = ssl.create_default_context()
@@ -32,11 +31,11 @@ def send_mailGS():
         msg
     )
 
-def send_mailUpdate():    
+def send_mailUpdate(product_update):
     subject =  "ASAP Update"
-    body = "Your Item is still Out of Stock"
+    body = product_update
     msg = f"subject: {subject}\n\n{body}"
-
+    
     server.sendmail(
         config.username,
         config.update_address,
