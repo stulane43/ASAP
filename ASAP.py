@@ -23,7 +23,7 @@ class lookupProduct:
 p1 = lookupProduct(config.BB_prod["name"], config.BB_prod["store"], config.BB_prod["url"], config.BB_prod["findClass"], config.BB_prod["classType"], config.BB_prod["typeContent"], config.BB_prod["regex"], config.BB_prod["availability"], Fore.BLUE)
 p2 = lookupProduct(config.GS_prod["name"], config.GS_prod["store"], config.GS_prod["url"], config.GS_prod["findClass"], config.GS_prod["classType"], config.GS_prod["typeContent"], config.GS_prod["regex"], config.GS_prod["availability"], Fore.MAGENTA)
 products = (p1, p2)
-emailCounter = 0
+emailCounter = 1
 emailupdate_string = ""
 
 def product_checker():
@@ -64,14 +64,14 @@ def product_update():
     productStatus_Total = ""
     productStatus_update = product_checker()
     productStatus_Total += productStatus_update
-    print(productStatus_Total)
+    print(emailCounter)
     return productStatus_Total
 
 while True:
     email_update = product_update()
     emailupdate_string += email_update
     emailCounter += 1
-    if emailCounter == 4:
+    if emailCounter == 2:
         send_email.send_mailUpdate(emailupdate_string)
         print(Fore.WHITE + "Product Status Update \n")
         emailCounter = 0

@@ -1,48 +1,38 @@
-import smtplib, ssl
+from re import sub
+import ssl
 import config
+from smtplib import SMTP as s
 
-port = 587
-server = smtplib.SMTP(config.mailServer, port)
-context = ssl.create_default_context()
+#subject = "ASAP Update"
 
-def createServer():
-    server.ehlo()
-    server.starttls(context=context)
-    server.ehlo
-    server.login(config.username, config.pwd)
+def send_status_email(em_address, em_subject, em_body):
+    port = 587
+    smtp_server = config.mailServer
+    context = ssl.create_default_context()
+    with s(smtp_server, port) as server:
+        server.starttls(context=context)
+        server.ehlo()
+        server.login(config.username, config.pwd)
+        subject =  em_subject
+        body = em_body
+        msg = f"subject: {subject}\n\n{body}"
+        receiver_email = em_address
+        server.sendmail(config.username, receiver_email, msg)
 
 def send_mailBB():
-    createServer()
+    receiver_email = config.to_address
     subject = config.BB_prod["name"] + " is Now Available!"
     body = "Your Item is now available at: \n" + config.BB_prod["url"]
-    msg = f"subject: {subject}\n\n{body}"
-
-    server.sendmail(
-        config.username,
-        config.to_address,
-        msg
-    )
+    send_status_email(receiver_email, subject, body)
     
 def send_mailGS():
-    createServer()
+    receiver_email = config.to_address
     subject = config.GS_prod["name"] + " is Now Available!"
     body = "Your Items is now available at: \n" + config.GS_prod["url"]
-    msg = f"subject: {subject}\n\n{body}"
-
-    server.sendmail(
-        config.username,
-        config.to_address,
-        msg
-    )
+    send_status_email(receiver_email, subject, body)
 
 def send_mailUpdate(product_update):
-    createServer()
+    receiver_email = config.update_address
     subject =  "ASAP Update"
     body = product_update
-    msg = f"subject: {subject}\n\n{body}"
-    
-    server.sendmail(
-        config.username,
-        config.update_address,
-        msg
-    )
+    send_status_email(receiver_email, subject, body)
