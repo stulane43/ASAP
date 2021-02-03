@@ -39,7 +39,6 @@ class lookupProduct:
             soldOut_email()
         else:
             available_email()
-            
 
     
     elif availability != product.availability:
