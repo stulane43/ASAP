@@ -1,15 +1,12 @@
-from re import sub
-import ssl
+import smtplib, ssl
 import config
-from smtplib import SMTP as s
 
-#subject = "ASAP Update"
+port = 587
+smtp_server = config.mailServer
+context = ssl.create_default_context()
 
 def send_status_email(em_address, em_subject, em_body):
-    port = 587
-    smtp_server = config.mailServer
-    context = ssl.create_default_context()
-    with s(smtp_server, port) as server:
+    with smtplib.SMTP(smtp_server, port) as server:
         server.starttls(context=context)
         server.ehlo()
         server.login(config.username, config.pwd)
@@ -22,17 +19,17 @@ def send_status_email(em_address, em_subject, em_body):
 def send_mailBB():
     receiver_email = config.to_address
     subject = config.BB_prod["name"] + " is Now Available!"
-    body = "Your Item is now available at: \n" + config.BB_prod["url"]
+    body = config.GS_prod["name"] + "now available at: \n" + config.BB_prod["url"]
     send_status_email(receiver_email, subject, body)
     
 def send_mailGS():
     receiver_email = config.to_address
     subject = config.GS_prod["name"] + " is Now Available!"
-    body = "Your Items is now available at: \n" + config.GS_prod["url"]
+    body = config.GS_prod["name"] + "now available at: \n" + config.GS_prod["url"]
     send_status_email(receiver_email, subject, body)
 
 def send_mailUpdate(product_update):
     receiver_email = config.update_address
-    subject =  "ASAP Update"
+    subject =  "ASAP Hourly Summary"
     body = product_update
     send_status_email(receiver_email, subject, body)
