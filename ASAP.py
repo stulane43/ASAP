@@ -28,6 +28,7 @@ class lookupProduct:
         productStatus_update += cur_time + product.store + " " + product.name + "  Sold-Out\n"
         sleep(2)
 
+
     def get_availability(self):
         page = requests.get(self.url, headers=self.headers)
         soup = BeautifulSoup(page.text, 'html.parser')
